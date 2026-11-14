@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Machined Hammer – Eleanor Ng</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --text: #1A2230;
+    --muted: #5E6878;
+    --line: #E4E7EC;
+    --accent: #1E5BD8;
+    --chip: #F1F4F8;
+    --display: "Times New Roman", Times, serif;
+    --body: "Times New Roman", Times, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #10161F;
+      --text: #E8ECF2;
+      --muted: #9AA5B4;
+      --line: #263142;
+      --accent: #6EA0FF;
+      --chip: #1A2330;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 1rem/1.65 var(--body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+  nav .mark { font: 700 1rem var(--display); color: var(--text); text-decoration: none; white-space: nowrap; }
+  nav .back { color: var(--muted); text-decoration: none; font-size: .95rem; }
+  nav .back:hover { color: var(--text); }
+
+  .hero { padding: 48px 0 56px; }
+  .eyebrow { color: var(--muted); font-size: .9rem; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+  h1 { font: 900 clamp(2.4rem, 7vw, 4.5rem)/1 var(--display); }
+  .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: start; gap: 8px 48px; margin-top: 28px; font-size: .95rem; }
+  .facts dt { color: var(--muted); font-size: .85rem; }
+  .facts dd { font-weight: 500; }
+  .hero-fig { margin-top: 40px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #FFFFFF; }
+  .hero-fig img { display: block; width: 100%; height: auto; }
+  .hero-fig.photo { background: none; }
+  .figs { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+  .figs .frame { aspect-ratio: 2 / 1; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .figs .frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .figs .frame.sketch { background: #FFFFFF; }
+  .figs .frame.sketch img { object-fit: contain; }
+  .figs figcaption { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+  .figs figcaption strong { color: var(--text); font-weight: 600; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  h2 { font: 700 1.6rem var(--display); margin-bottom: 24px; }
+  h3 { font: 600 1.1rem var(--body); margin-bottom: 6px; }
+  .prose { max-width: 40em; color: var(--muted); }
+  .prose + .prose { margin-top: 16px; }
+  .prose strong { color: var(--text); font-weight: 600; }
+
+
+  .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .spec { border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+  .spec b { display: block; font: 700 1.35rem var(--display); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+  .spec span { color: var(--muted); font-size: .92rem; }
+
+
+  .lessons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 28px; }
+  .lessons p { color: var(--muted); font-size: .97rem; }
+
+  .next { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+
+  @media (max-width: 720px) {
+    .hero { padding: 24px 0 40px; }
+    .facts { grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+    .specs, .lessons, .figs { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="mark" href="Portfolio.html">Eleanor Ng</a>
+      <a class="back" href="Portfolio.html#projects">← All projects</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow">E4 · Harvey Mudd College machine shop</p>
+      <h1>Machined hammer</h1>
+      <dl class="facts">
+        <div><dt>When</dt><dd>Spring 2025</dd></div>
+        <div><dt>Parts</dt><dd>6, from raw stock</dd></div>
+        <div><dt>Materials</dt><dd>Steel, nylon, oak</dd></div>
+        <div><dt>Standard</dt><dd>ASME Y14.5 GD&amp;T</dd></div>
+      </dl>
+      <figure class="hero-fig photo">
+        <img src="images/hammer/hammer-stand.jpg" alt="The finished hammer resting on a laser-engraved wooden stand with a mountain landscape and the text Ellie Ng's Hammer E4 2025">
+      </figure>
+    </header>
+
+    <main>
+      <section aria-labelledby="overview">
+        <h2 id="overview">Overview</h2>
+        <p class="prose">I machined a six-part hammer from raw bar stock and an oak blank, working from a set of engineering drawings and a process router that lays out every operation in order. The project was practice on nearly every machine in the shop: the lathe and mill for the steel parts, bandsaws, a laser cutter and a router table for the handle, and heat-treating ovens for the hard face.</p>
+        <p class="prose">The parts had to fit together without adjustment. The hard face press-fits into the head, the soft face screws on, and the handle is wedged through a milled slot, so every part had to come out within tolerance.</p>
+        <div class="figs">
+          <figure>
+            <div class="frame"><img src="images/hammer/hammer-front.jpg" alt="Side view of the finished hammer in front of its engraved stand, showing the steel head, white nylon soft face and shaped oak handle"></div>
+            <figcaption><strong>The finished hammer</strong> with the laser-engraved stand I made for it.</figcaption>
+          </figure>
+        </div>
+        <h3 style="margin-top:32px">Working from the drawings and process router</h3>
+        <p class="prose">Each part had its own engineering drawing, with dimensions and GD&amp;T callouts for the features that mattered most, plus an assembly drawing showing how the six parts fit together. I followed a process router for each part: an ordered list of operations giving the machine, tooling, speeds and feeds, and what to watch for at each step. For the steel head, that meant facing, turning, drilling, tapping and reaming on the lathe, then milling the flats and slot. I read each callout off the drawing, measured as I cut, and used the router to plan when to rough, when to take a light finishing pass, and when to stop and check against the mating part.</p>
+      </section>
+
+      <section aria-labelledby="specs">
+        <h2 id="specs">Key specifications</h2>
+        <p class="prose">The drawings use geometric dimensioning and tolerancing, so features are controlled by position and perpendicularity relative to datums, not just by size. These were the tightest features to hit:</p>
+        <div class="specs">
+          <div class="spec"><b>0.0005–0.002 in</b><span>Interference between the hard face stem (Ø0.5020 +0/−0.0005) and its hole in the head (Ø0.500 +0.001/−0). I measured the hole with pin gauges and turned the stem to match.</span></div>
+          <div class="spec"><b>0.860 in</b><span>Distance between the two milled flats on the head, finished with a 0.01 in fly-cutter pass on each side.</span></div>
+          <div class="spec"><b>Ø0.005 in</b><span>Position tolerance at maximum material condition for the head's holes and slot, relative to the part's datums.</span></div>
+          <div class="spec"><b>RC 43–48</b><span>Rockwell C hardness for the hard face after heat treating and an oil quench, so it can strike steel without denting.</span></div>
+          <div class="spec"><b>SR 1.25 in</b><span>Spherical radius ground onto the hard face, checked with a radius gauge.</span></div>
+          <div class="spec"><b>8.25 in</b><span>Overall length, with the hard face, head and wedge finished flush.</span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="learned">
+        <h2 id="learned">What I learned</h2>
+        <div class="lessons">
+          <div>
+            <h3>Reading drawings</h3>
+            <p>Interpreting GD&amp;T callouts like position at maximum material condition, datums and feature control frames, and turning them into measurements I could check at the machine.</p>
+          </div>
+          <div>
+            <h3>Planning for tolerance</h3>
+            <p>Roughing close, then taking a light finishing pass, and measuring the mating part before cutting, as I did for the press fit, instead of trusting the nominal number.</p>
+          </div>
+          <div>
+            <h3>Shop practice</h3>
+            <p>Choosing speeds and feeds, peck drilling, fixturing parts securely, heat treating safely, and knowing when to stop sanding.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="next">
+        <a href="Portfolio.html#projects">← Back to all projects</a>
+      </section>
+    </main>
+
+    <footer>© 2026 Eleanor Ng</footer>
+  </div>
+</body>
+</html>

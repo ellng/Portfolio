@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eleanor Ng – Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --text: #1A2230;
+    --muted: #5E6878;
+    --line: #E4E7EC;
+    --accent: #1E5BD8;
+    --display: "Times New Roman", Times, serif;
+    --body: "Times New Roman", Times, serif;
+    --name: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --node: #1A2230;
+    --flow: rgba(30, 91, 216, .16);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #10161F;
+      --text: #E8ECF2;
+      --muted: #9AA5B4;
+      --line: #263142;
+      --accent: #6EA0FF;
+      --node: #E8ECF2;
+      --flow: rgba(110, 160, 255, .15);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 1rem/1.65 var(--body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Navigation */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+  nav .mark { font: 700 1rem var(--display); color: var(--text); text-decoration: none; white-space: nowrap; margin-right: 16px; }
+  nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: .95rem; }
+  nav ul a { color: var(--muted); text-decoration: none; }
+  nav ul a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero { padding: 72px 0 96px; position: relative; isolation: isolate; }
+  html, body { overflow-x: clip; }
+  /* Background: potential flow streamlines around the profile photo (treated as a cylinder) */
+  .flow-bg { position: absolute; z-index: -1; top: 0; bottom: 0; left: calc(50% - 50vw); width: 100vw; height: 100%; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 75%, transparent); mask-image: linear-gradient(to bottom, #000 75%, transparent); }
+  .flow-bg path { fill: none; stroke: var(--flow); stroke-width: 1.2; stroke-linecap: round; }
+  .flow-bg path.dash { stroke-dasharray: 2 46; stroke-width: 2.2; animation: flow-move 6s linear infinite; }
+  @keyframes flow-move { to { stroke-dashoffset: -48; } }
+  @media (prefers-reduced-motion: reduce) { .flow-bg path.dash { animation: none; } }
+  .hero-top { display: flex; align-items: center; gap: 40px; }
+  .hero-top .beam-name { flex: 1 1 auto; min-width: 0; }
+  .profile { flex: 0 0 auto; width: clamp(140px, 22vw, 220px); aspect-ratio: 1; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg); box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.12); }
+  @media (max-width: 600px) {
+    .hero-top { flex-direction: column-reverse; align-items: flex-start; gap: 24px; }
+    .hero-top .beam-name { width: 100%; }
+    .profile { width: 120px; }
+  }
+  /* Name drawn as a truss of beam elements, colored by stress */
+  .beam-name .name-text {
+    font-family: var(--name); font-weight: 900; font-stretch: 75%;
+    font-size: clamp(4rem, 14vw, 9.5rem); line-height: .88; display: block;
+  }
+  .beam-name.rendered .name-text {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .beam-name svg { display: block; width: 100%; max-width: 760px; height: auto; }
+  .beam-name svg line { stroke-linecap: round; }
+  .beam-name svg circle { fill: var(--node); }
+  .beam-name svg .el { opacity: 0; animation: beam-in .45s ease-out forwards; animation-delay: calc(var(--d) * 1s); }
+  @keyframes beam-in { to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    .beam-name svg .el { opacity: 1; animation: none; }
+  }
+
+  /* Skills legend, styled like an FEA results color bar */
+  .legend { margin-top: 28px; width: min(100%, 720px); }
+  .legend figcaption { font-size: .85rem; font-weight: 600; margin-bottom: 8px; color: var(--text); letter-spacing: .02em; }
+  .legend-scale { display: grid; grid-template-columns: repeat(8, 1fr); list-style: none; padding: 0; }
+  .legend-scale li { font-size: .85rem; line-height: 1.25; color: var(--text); text-align: center; padding: 0 3px; }
+  .legend-scale li::before { content: ""; display: block; height: 14px; margin: 0 -3px 8px; background: var(--c); }
+  @media (max-width: 560px) {
+    .legend-scale { grid-template-columns: repeat(4, 1fr); row-gap: 12px; }
+  }
+  .hero p.lede { max-width: 34em; margin-top: 32px; font-size: 1.2rem; color: var(--muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 24px; padding: 0; list-style: none; font-size: .95rem; }
+  .facts strong { font-weight: 600; }
+  .facts .full { flex-basis: 100%; }
+
+  /* Sections */
+  section { padding: 80px 0; border-top: 1px solid var(--line); }
+  h2 { font: 700 1.75rem var(--display); margin-bottom: 40px; }
+
+  /* Projects */
+  .project { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 64px; }
+  .project:last-child { margin-bottom: 0; }
+  .project figure { aspect-ratio: 4 / 3; background: var(--line); border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
+  .project figure img { width: 100%; height: 100%; object-fit: cover; }
+  .project figure span { color: var(--muted); font-size: .9rem; }
+  .project h3 { font: 700 1.35rem var(--display); margin-bottom: 8px; }
+  .project p { color: var(--muted); margin-bottom: 16px; }
+  .specs { display: grid; grid-template-columns: auto 1fr; gap: 4px 20px; font-size: .95rem; margin-bottom: 16px; }
+  .specs dt { color: var(--muted); }
+  .specs dd { font-weight: 500; }
+  .project a { font-weight: 500; }
+  .project figure.photo { aspect-ratio: 3 / 4; }
+  .project figure.sketch { background: #FFFFFF; }
+  .project figure.tall { aspect-ratio: auto; }
+  .project figure.tall img { height: auto; }
+  .project figure.sketch img { object-fit: contain; padding: 12px; }
+  .project h4 { font: 600 .95rem var(--body); margin-bottom: 8px; }
+  .outcomes { color: var(--muted); padding-left: 1.1em; margin-bottom: 16px; }
+  .outcomes li { margin-bottom: 6px; }
+  /* Whole card is a link */
+  .project-link { color: inherit; text-decoration: none; align-items: start; padding: 20px; margin: -20px -20px 44px; border-radius: 12px; transition: background .15s; }
+  .project-link:hover { background: color-mix(in srgb, var(--line) 45%, transparent); }
+  .project-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .project-link .more { color: var(--accent); font-weight: 500; }
+  .project-link:hover .more { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .skills li { margin-bottom: 4px; }
+  .skills h3 { font: 600 1rem var(--body); margin-bottom: 8px; }
+  .skills ul { list-style: none; padding: 0; color: var(--muted); }
+
+  /* Experience */
+  .jobs { list-style: none; padding: 0; }
+  .jobs > li { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding-bottom: 36px; }
+  .jobs time { color: var(--muted); font-size: .95rem; }
+  .jobs h3 { font: 600 1.05rem var(--body); margin-bottom: 4px; }
+  .jobs p { color: var(--muted); max-width: 40em; }
+  .jobs .org { margin-bottom: 12px; font-size: .95rem; }
+  .job-points { color: var(--muted); padding-left: 1.1em; margin: 14px 0 0; max-width: 42em; }
+  .job-points li { display: list-item; padding: 0; margin-bottom: 6px; }
+  .job-figs { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; margin-top: 24px; align-items: start; }
+  .job-figs img { display: block; width: 100%; height: auto; border-radius: 6px; background: #FFFFFF; }
+  .job-logo { display: inline-block; background: #FFFFFF; border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 10px 0 4px; }
+  .job-logo img { display: block; width: min(320px, 70vw); height: auto; }
+  a.job-logo { transition: border-color .15s; }
+  a.job-logo:hover { border-color: var(--accent); }
+  .jobs h3 a { color: inherit; text-decoration-color: var(--line); }
+  .jobs h3 a:hover { color: var(--accent); }
+  .job-figs figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px; }
+  .jobs .pub { margin-top: 20px; font-size: .95rem; border-left: 3px solid var(--accent); padding-left: 14px; }
+  .jobs .pub span { display: block; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--text); margin-bottom: 2px; }
+  .jobs .pub strong { color: var(--text); }
+
+  /* Contact */
+  .contact p { max-width: 36em; color: var(--muted); margin-bottom: 24px; }
+  .btn { display: inline-block; background: var(--text); color: var(--bg); text-decoration: none; font-weight: 500; padding: 12px 22px; border-radius: 6px; margin: 0 12px 12px 0; }
+  .btn.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .links { margin-top: 12px; display: flex; gap: 20px; }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+
+  @media (max-width: 900px) { .skills { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 720px) {
+    nav ul { gap: 16px; }
+    .hero { padding: 40px 0 64px; }
+    .project, .jobs > li { grid-template-columns: 1fr; gap: 16px; }
+    .job-figs { grid-template-columns: 1fr; }
+    .skills { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+
+<!-- ================= BODY STARTS HERE ================= -->
+<body>
+  <div class="wrap">
+
+    <nav aria-label="Main">
+      <a class="mark" href="#top">Eleanor Ng</a>
+      <ul>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="personal.html">Personal</a></li>
+      </ul>
+    </nav>
+
+    <header id="top" class="hero">
+      <svg class="flow-bg" aria-hidden="true"></svg>
+      <!-- Change your name here. Use | to split it across lines. -->
+      <div class="hero-top">
+        <h1 class="beam-name" data-lines="Eleanor|Ng">
+          <span class="name-text">Eleanor<br>Ng</span>
+        </h1>
+        <img class="profile" src="images/profile.jpg" alt="Portrait of Eleanor Ng">
+      </div>
+      <figure class="legend">
+        <figcaption>Skills and traits</figcaption>
+        <ul class="legend-scale">
+          <li style="--c:#1B3BFF">MATLAB</li>
+          <li style="--c:#1C8CFF">ANSYS</li>
+          <li style="--c:#19D3F0">Python</li>
+          <li style="--c:#19E07A">SolidWorks CA</li>
+          <li style="--c:#7BE01B">Microsoft Suite</li>
+          <li style="--c:#E8E81A">Team player</li>
+          <li style="--c:#FFB21A">Organized</li>
+          <li style="--c:#E3201B">Driven</li>
+        </ul>
+      </figure>
+      <p class="lede">Hi! I am a junior at Harvey Mudd College pursuing a General Engineering degree. I am interested and have experience in mechanical, structural, and systems engineering, and am drawn to any system that withstands the forces of nature. Specifically, I love the ocean and am fascinated by the engineering it takes to work in it. I'm looking for opportunities to design systems that hold up in these environments and help protect them.</p>
+      <ul class="facts">
+        <li><strong>B.S. Engineering</strong>, Class of 2028</li>
+        <li>Claremont, CA | Boston, MA</li>
+        <li>Major GPA 3.88/4.0 · Cumulative GPA 3.82/4.0 · Dean's List (all graded semesters)</li>
+        <li class="full">Looking for summer 2027 internships</li>
+      </ul>
+    </header>
+
+    <main>
+      <section id="projects">
+        <h2>Projects</h2>
+
+        <a class="project project-link" href="e80.html">
+          <figure class="photo">
+            <img src="images/e80/auv-photo.jpg" alt="Our AUV on the dock at Dana Point: white PVC frame with purple foam floats, three motors and a black mesh-wrapped electronics box">
+          </figure>
+          <div>
+            <h3>Autonomous underwater vehicle for ocean sensing</h3>
+            <p>Worked in a team of 4 to design and deploy an autonomous underwater vehicle with a pressure sensor, thermistor, and pH sensor to develop a way to characterize different layers of the ocean to understand ocean acidification and how climate change is harming the natural process of marine organisms. We deployed our AUV at Dana Point, CA, collected data, and presented our findings to professors and other engineering students at Harvey Mudd College. I was the mechanical lead: I designed the frame and waterproof electronics enclosure, ran the buoyancy and ballast calculations, and led integration of the motors, sensors and electronics into the vehicle. I also managed team organization and worked with my teammates on the circuits, C++ code, and data analysis.</p>
+            <h4>Key outcomes</h4>
+            <ul class="outcomes">
+              <li>Led mechanical design and integration, and calculated buoyancy and ballast for neutral trim: 0.63 kg of ballast for freshwater testing, plus 91 g for denser seawater at Dana Point</li>
+              <li>Built custom operational-amplifier circuits to scale analog sensor outputs to the input range of a Teensy 4.0. This allowed us to achieve higher resolutions to analyze the data collected.</li>
+              <li>Debugged circuits and hardware during testing and deployment using oscilloscopes and multimeters</li>
+              <li>Programmed feedback control loops in C++ for AUV depth and dive control</li>
+              <li>Used MATLAB to process collected data and create 2D plots</li>
+            </ul>
+            <span class="more">See the full project <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="project project-link" href="dental.html">
+          <figure class="sketch tall">
+            <img src="images/dental/clinic-layout.png" alt="Diagram of the 68-chair clinic piping with simulated vacuum labeled along the trunk, main line and four rows of chairs">
+          </figure>
+          <div>
+            <h3>Dental clinic suction analysis</h3>
+            <p>A MATLAB and Python simulation for designing and optimizing the vacuum piping network of large pop-up dental clinics. The software simulates different clinic layouts, evaluates the suction and flow rate at each chair, and recommends the best pipe sizes for each part of the clinic. The baseline model is a 68-chair community dental clinic run in Mansfield, CT by the CT Foundation for Dental Outreach. I led development of the web GUI, a step-by-step configuration wizard that lets the clinic team build a layout and run the optimizer without touching the code.</p>
+            <dl class="specs">
+              <dt>Role</dt><dd>Team member, GUI development lead</dd>
+              <dt>Tools</dt><dd>MATLAB, Python, NiceGUI</dd>
+              <dt>Code</dt><dd>GitHub repo and web GUI: open-source release in progress</dd>
+            </dl>
+            <span class="more">See the full project <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+
+        <a class="project project-link" href="hammer.html">
+          <figure class="sketch">
+            <img src="images/hammer/hammer.svg" alt="Illustration of the machined hammer: steel head with a hardened steel face and a nylon soft face on a shaped oak handle">
+          </figure>
+          <div>
+            <h3>Machined Hammer</h3>
+            <p>Machined a six-part hammer from raw stock in the Harvey Mudd machine shop, working from engineering drawings with GD&amp;T tolerances and a step-by-step process router. The steel head and faces were turned on the lathe and milled, the hard face was heat-treated and press-fit into the head, and the oak handle was laser-etched, cut, routed and hand-shaped.</p>
+            <dl class="specs">
+              <dt>Course</dt><dd>E4, Harvey Mudd College</dd>
+              <dt>Machines</dt><dd>Lathe, mill, bandsaws, laser cutter, router table</dd>
+              <dt>Key spec</dt><dd>Hard face press fit, 0.0005–0.002 in interference</dd>
+            </dl>
+            <span class="more">See the full project <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      </section>
+
+      <section id="experience">
+        <h2>Experience</h2>
+        <ol class="jobs">
+          <li>
+            <time>Fall 2026</time>
+            <div>
+              <h3>Engineering Consultant, <a href="https://arcticar.com/" target="_blank" rel="noopener">Arcticar</a></h3>
+              <a class="job-logo" href="https://arcticar.com/" target="_blank" rel="noopener" aria-label="Arcticar website (opens in a new tab)">
+                <img src="images/arcticar/arcticar-logo.svg" alt="Arcticar logo" loading="lazy">
+              </a>
+              <ul class="job-points">
+                <li>Designing and prototyping mounting system within Arcticar’s battery module for their electronic refrigeration system</li>
+                <li>Conducting finite element analysis using ANSYS to validate our design for shock and vibration</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>Summer 2026</time>
+            <div>
+              <h3>Structural Engineering Intern, General Dynamics Electric Boat</h3>
+              <figure class="job-logo">
+                <img src="images/gdeb/electric-boat-logo.png" alt="General Dynamics Electric Boat logo" loading="lazy">
+              </figure>
+              <ul class="job-points">
+                <li>Resolved design and construction issues relating to internal structures within the COLUMBIA class of submarines</li>
+                <li>Revised calculation package to demonstrate the structural integrity of design changes</li>
+                <li>Performed finite element analysis using proprietary software and gained experience with Teamcenter</li>
+                <li>Obtained Secret Clearance (DoD)</dd>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>Summer 2025</time>
+            <div>
+              <h3>Undergraduate Researcher, Olsen Lab</h3>
+              <p class="org">Department of Chemical Engineering, Massachusetts Institute of Technology</p>
+              <p>Plastic in recycling streams loses value because recyclers don't know which additives and dyes it contains. Only the brand that made it does. I worked on an AI image-recognition model that sorts plastic waste by manufacturer as it passes under an overhead camera on a conveyor belt, so brands can buy back their own packaging under extended producer responsibility programs.</p>
+              <ul class="job-points">
+                <li>Trained an AI model to sort plastics by manufacturer branding instead of plastic type, enabling manufacturers to reclaim and recycle their products more efficiently by matching specific grades and additives</li>
+                <li>Wrote Python scripts to process a large dataset, doubled the dataset to ~40,000 images, tested trained models</li>
+                <li>Analyzed how item crowding impacted the model’s prediction and performance, patched dataset, and improved mean average precision scores of brand identification by 23.33%</li>
+                <li>Awarded The Ben Huppe '14 Memorial Internship for a Sustainable World</li>
+              </ul>
+              <div class="job-figs">
+                <figure>
+                  <img src="images/mit/conveyor-annotation.jpg" alt="Conveyor belt imaging rig with an overhead camera, and two video frames of plastic bottles with bounding boxes labeled by brand: Dasani, Evian, Coke, Poland Spring, Vitaminwater, Aquafina" loading="lazy">
+                  <figcaption>Bottles imaged on the conveyor, then annotated by brand to train the model.</figcaption>
+                </figure>
+                <figure>
+                  <img src="images/mit/map-vs-item-count.jpg" alt="Scatter plot of average mAP score against number of items in the image, before training, after the first training and after the second training; after the second training accuracy stays above 0.84 even at 10 items" loading="lazy">
+                  <figcaption>After the second round of training, accuracy drops only about 1% per extra item in the frame, down from about 2.2%.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </li>
+          <li>
+            <time>Summer 2023</time>
+            <div>
+              <h3>Research Intern, Olsen Lab</h3>
+              <p class="org">Department of Chemical Engineering, Massachusetts Institute of Technology</p>
+              <ul class="job-points">
+                <li>Operated nano-FTIR microscope, prepared 300+ samples, analyzed data</li>
+                <li>Presented work and findings weekly to Prof. Olsen</li>
+              </ul>
+              <p class="pub"><span>Publication</span>“Improving the Optical Sorting of Polyester Bioplastics via Reflectance Spectroscopy and Machine Learning Classification Techniques,” Alexis Hocken, Sharona Huang, <strong>Eleanor Ng</strong>, and Bradley D. Olsen, <em>ACS Applied Polymer Materials</em>, November 2024.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="contact" class="contact">
+        <h2>Get in touch</h2>
+        <p>I'm looking for summer 2027 internships where I can apply my general engineering experience to new problems. Email is the fastest way to reach me.</p>
+        <a class="btn" href="mailto:ellng@g.hmc.edu">Email me</a>
+        <a class="btn secondary" href="Eleanor-Ng-Resume.pdf" download>Download resume</a>
+        <div class="links">
+          <a href="https://www.linkedin.com/in/elliewng/">LinkedIn</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Eleanor Ng</footer>
+  </div>
+
+  <script>
+  (function () {
+    // ---- Settings you can tweak ----
+    const STRESS_MAX = 42.0;   // MPa, peak von Mises stress (the minimum is calculated)
+    const SPACING = 9;         // distance between nodes; smaller = finer mesh, more beams
+    const COLORS = ["#1B3BFF", "#1C8CFF", "#19D3F0", "#19E07A",
+                    "#7BE01B", "#E8E81A", "#FFB21A", "#E3201B"]; // low to high
+
+    const h1 = document.querySelector(".beam-name");
+    const lines = (h1.dataset.lines || h1.textContent.trim()).split("|");
+    const FONT_SIZE = 220;
+    const LINE_HEIGHT = FONT_SIZE * 0.9;
+    const fontSpec = `900 condensed ${FONT_SIZE}px Archivo, "Arial Narrow", Arial, sans-serif`;
+
+    function build() {
+      // 1. Rasterize the name on a hidden canvas
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.font = fontSpec;
+      const width = Math.ceil(Math.max(...lines.map(l => ctx.measureText(l).width))) + SPACING * 3;
+      const height = Math.ceil(LINE_HEIGHT * lines.length + FONT_SIZE * 0.1) + SPACING * 2;
+      canvas.width = width; canvas.height = height;
+      ctx.font = fontSpec;
+      ctx.fillStyle = "#000";
+      lines.forEach((text, k) => ctx.fillText(text, SPACING, SPACING + FONT_SIZE * 0.76 + k * LINE_HEIGHT));
+      const pixels = ctx.getImageData(0, 0, width, height).data;
+
+      // 2. Place nodes on a grid wherever the letters are solid
+      const cols = Math.floor(width / SPACING), rows = Math.floor(height / SPACING);
+      const isNode = (i, j) => {
+        if (i < 0 || j < 0 || i > cols || j > rows) return false;
+        const x = i * SPACING, y = j * SPACING;
+        if (x >= width || y >= height) return false;
+        return pixels[(y * width + x) * 4 + 3] > 110;
+      };
+      const lineOf = y => Math.max(0, Math.min(lines.length - 1, Math.floor((y - SPACING) / LINE_HEIGHT)));
+
+      // Bounding box of each line, so each word acts as its own beam
+      const box = lines.map(() => ({ minX: Infinity, maxX: -Infinity, minY: Infinity, maxY: -Infinity }));
+      for (let i = 0; i <= cols; i++) for (let j = 0; j <= rows; j++) if (isNode(i, j)) {
+        const b = box[lineOf(j * SPACING)], x = i * SPACING, y = j * SPACING;
+        b.minX = Math.min(b.minX, x); b.maxX = Math.max(b.maxX, x);
+        b.minY = Math.min(b.minY, y); b.maxY = Math.max(b.maxY, y);
+      }
+
+      // 3. Connect nodes with beams: horizontals, verticals, and one diagonal per cell (a truss)
+      const beams = [], used = new Set();
+      const add = (i1, j1, i2, j2) => {
+        beams.push([i1 * SPACING, j1 * SPACING, i2 * SPACING, j2 * SPACING]);
+        used.add(i1 + "," + j1); used.add(i2 + "," + j2);
+      };
+      for (let i = 0; i <= cols; i++) for (let j = 0; j <= rows; j++) {
+        if (!isNode(i, j)) continue;
+        if (isNode(i + 1, j)) add(i, j, i + 1, j);
+        if (isNode(i, j + 1)) add(i, j, i, j + 1);
+        if (isNode(i + 1, j) && isNode(i, j + 1) && isNode(i + 1, j + 1)) {
+          (i + j) % 2 === 0 ? add(i, j, i + 1, j + 1) : add(i + 1, j, i, j + 1);
+        }
+      }
+
+      // 4. Stress field: each word is a cantilever beam, fixed at its left end, with a tip load P
+      //    at its right end. Both words share the same load, thickness and material.
+      //    Bending:  sigma = M*y/I, with M = P*(L - x), I = b*h^3/12  (peaks at the root, top and bottom fibers)
+      //    Shear:    tau = 1.5*P/(b*h) * (1 - (2y/h)^2)              (peaks along the neutral axis)
+      //    Von Mises for this plane stress state: sqrt(sigma^2 + 3*tau^2)
+      const vonMises = (x, y) => {
+        const b = box[lineOf(y)];
+        const L = Math.max(1, b.maxX - b.minX), h = Math.max(1, b.maxY - b.minY);
+        const xi = (x - b.minX) / L;                        // 0 at the fixed end, 1 at the tip
+        const eta = (y - (b.minY + b.maxY) / 2) / (h / 2);  // -1 top fiber, 0 neutral axis, +1 bottom fiber
+        const sigma = (6 * L / (h * h)) * (1 - xi) * eta;   // in units of P/b
+        const tau = (1.5 / h) * (1 - eta * eta);
+        return Math.sqrt(sigma * sigma + 3 * tau * tau);
+      };
+      const raw = beams.map(([x1, y1, x2, y2]) => vonMises((x1 + x2) / 2, (y1 + y2) / 2));
+      // Choose the load so the peak stress equals STRESS_MAX; the minimum follows from the physics
+      const scale = STRESS_MAX / Math.max(...raw);
+      const stress = raw.map(v => v * scale);
+      // Equal-count color bands (histogram equalization): rank beams by stress and give each
+      // color the same number of beams, so the contour still runs low (blue) to high (red)
+      // but every color shows up evenly instead of most of the name reading blue.
+      // Ranked within each word, so both words show the full blue-to-red range.
+      const bandOf = new Array(stress.length);
+      lines.forEach((_, k) => {
+        const ids = beams.map((b, n) => n).filter(n => lineOf((beams[n][1] + beams[n][3]) / 2) === k);
+        ids.sort((p, q) => stress[p] - stress[q]);
+        ids.forEach((n, rank) => {
+          bandOf[n] = Math.min(COLORS.length - 1, Math.floor(rank / ids.length * COLORS.length));
+        });
+      });
+
+      // 5. Draw as SVG
+      const ns = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(ns, "svg");
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.setAttribute("aria-hidden", "true");
+      const stroke = SPACING * 0.26;
+      let markup = "";
+      beams.forEach(([x1, y1, x2, y2], n) => {
+        const band = bandOf[n];
+        const delay = (((x1 + x2) / 2) / width * 0.9).toFixed(3);
+        markup += `<line class="el" style="--d:${delay}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${COLORS[band]}" stroke-width="${stroke}"/>`;
+      });
+      used.forEach(key => {
+        const [i, j] = key.split(",").map(Number);
+        const delay = ((i * SPACING) / width * 0.9).toFixed(3);
+        markup += `<circle class="el" style="--d:${delay}" cx="${i * SPACING}" cy="${j * SPACING}" r="${SPACING * 0.17}"/>`;
+      });
+      svg.innerHTML = markup;
+      h1.appendChild(svg);
+      h1.classList.add("rendered");
+    }
+
+    // Wait for the web font so the letters are measured correctly
+    const ready = document.fonts && document.fonts.load
+      ? document.fonts.load(`900 ${FONT_SIZE}px Archivo`).then(() => document.fonts.ready)
+      : Promise.resolve();
+    ready.then(build, build);
+  })();
+
+  // ---- Hero background: inviscid flow past a cylinder (the profile photo) ----
+  // Stream function for uniform flow U past a cylinder of radius a:
+  //   psi(x, y) = U * y * (1 - a^2 / (x^2 + y^2))
+  // Each streamline is a contour psi = c; far upstream it sits at height y = c.
+  (function () {
+    const svg = document.querySelector(".flow-bg");
+    const hero = document.querySelector(".hero");
+    const photo = document.querySelector(".profile");
+    if (!svg || !hero || !photo) return;
+    const GAP = 30;   // spacing between streamlines far from the cylinder, px
+    const STEP = 8;   // horizontal sampling step, px
+
+    function draw() {
+      const box = svg.getBoundingClientRect();
+      const p = photo.getBoundingClientRect();
+      const W = box.width, H = box.height;
+      if (!W || !H) return;
+      const cx = p.left + p.width / 2 - box.left;
+      const cy = p.top + p.height / 2 - box.top;
+      const a = p.width / 2 + 14;                       // cylinder radius, with a small gap around the photo
+      const psi = (x, y) => y * (1 - (a * a) / (x * x + y * y));
+
+      // For a given x and c, find y with psi(x, y) = c by bisection on the side y has the sign of c
+      function solveY(x, c) {
+        const s = c >= 0 ? 1 : -1, ac = Math.abs(c);
+        let lo = Math.sqrt(Math.max(0, a * a - x * x)) + 1e-6, hi = ac + a * 2 + 10;
+        for (let k = 0; k < 40; k++) {
+          const mid = (lo + hi) / 2;
+          (s * psi(x, s * mid) < ac) ? (lo = mid) : (hi = mid);
+        }
+        return s * (lo + hi) / 2;
+      }
+
+      let d = "";
+      const cMin = -Math.ceil(cy / GAP) * GAP - GAP / 2;
+      const cMax = Math.ceil((H - cy) / GAP) * GAP + GAP / 2;
+      for (let c = cMin; c <= cMax; c += GAP) {
+        let seg = "";
+        for (let X = -20; X <= W + 20; X += STEP) {
+          const y = cy + solveY(X - cx, c);
+          seg += (seg ? "L" : "M") + X.toFixed(1) + " " + y.toFixed(1);
+        }
+        d += `<path d="${seg}"/><path class="dash" d="${seg}"/>`;
+      }
+      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+      svg.innerHTML = d;
+    }
+
+    let raf = 0;
+    const schedule = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); };
+    if ("ResizeObserver" in window) new ResizeObserver(schedule).observe(hero);
+    window.addEventListener("resize", schedule);
+    if (photo.complete) schedule(); else photo.addEventListener("load", schedule);
+    schedule();
+  })();
+  </script>
+</body>
+</html>

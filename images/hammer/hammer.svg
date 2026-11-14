@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Times New Roman, Times, serif" font-size="15">
+  <title>Machined hammer: steel head with a hardened steel face and a nylon soft face, on a shaped oak handle</title>
+  <defs>
+    <linearGradient id="steel" x1="0" x2="1">
+      <stop offset="0" stop-color="#7D8793"/><stop offset=".45" stop-color="#C9D0D8"/><stop offset="1" stop-color="#8B95A1"/>
+    </linearGradient>
+    <linearGradient id="hard" x1="0" x2="1">
+      <stop offset="0" stop-color="#4F5763"/><stop offset=".45" stop-color="#9CA4AE"/><stop offset="1" stop-color="#5C6470"/>
+    </linearGradient>
+    <linearGradient id="nylon" x1="0" x2="1">
+      <stop offset="0" stop-color="#E2DACA"/><stop offset=".45" stop-color="#FAF7F0"/><stop offset="1" stop-color="#E6DFD0"/>
+    </linearGradient>
+    <linearGradient id="oak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9B27A"/><stop offset=".5" stop-color="#E7C795"/><stop offset="1" stop-color="#C49A62"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="300" fill="#FFFFFF"/>
+
+  <!-- Handle (clear oak) -->
+  <path d="M104 132 C150 134 175 136 230 130 C330 120 430 122 520 124 C548 125 560 130 560 150 C560 170 548 175 520 176 C430 178 330 180 230 170 C175 164 150 166 104 168 Z"
+        fill="url(#oak)" stroke="#8A6A3D" stroke-width="1.5"/>
+  <g stroke="#B88C55" stroke-width="1" fill="none" opacity=".7">
+    <path d="M120 142 C220 140 320 134 540 138"/>
+    <path d="M118 152 C240 152 360 148 548 152"/>
+    <path d="M122 160 C230 160 350 164 540 162"/>
+  </g>
+  <!-- Head (AISI 1015) -->
+  <rect x="56" y="94" width="48" height="113" rx="3" fill="url(#steel)" stroke="#5E6874" stroke-width="1.5"/>
+  <rect x="58" y="112" width="44" height="6" fill="#AEB6C0" opacity=".6"/>
+  <rect x="58" y="183" width="44" height="6" fill="#AEB6C0" opacity=".6"/>
+  <!-- Hard face (AISI 4340, heat treated), domed -->
+  <path d="M56 94 L56 70 Q80 58 104 70 L104 94 Z" fill="url(#hard)" stroke="#3E4652" stroke-width="1.5"/>
+  <!-- Soft face (nylon) -->
+  <path d="M58 207 L58 234 Q58 240 64 240 L96 240 Q102 240 102 234 L102 207 Z" fill="url(#nylon)" stroke="#9A907E" stroke-width="1.5"/>
+
+  <!-- Callouts -->
+  <g stroke="#5E6878" stroke-width="1" fill="none">
+    <path d="M104 74 L150 40 L176 40"/>
+    <path d="M104 150 L150 100 L176 100" />
+    <path d="M102 228 L150 262 L176 262"/>
+    <path d="M400 124 L420 70 L446 70"/>
+  </g>
+  <g fill="#1A2230">
+    <text x="182" y="36" font-weight="700">Hard face</text>
+    <text x="182" y="54" fill="#5E6878" font-size="13">AISI 4340 steel, heat treated to RC 43–48</text>
+    <text x="182" y="96" font-weight="700">Head</text>
+    <text x="182" y="114" fill="#5E6878" font-size="13">AISI 1015 steel, milled flats and slot</text>
+    <text x="182" y="258" font-weight="700">Soft face</text>
+    <text x="182" y="276" fill="#5E6878" font-size="13">Nylon, held on with a 1/4-20 set screw</text>
+    <text x="452" y="66" font-weight="700">Handle</text>
+    <text x="452" y="84" fill="#5E6878" font-size="13">Clear oak, Grady wedge</text>
+  </g>
+  <!-- Overall length -->
+  <g stroke="#9AA5B4" stroke-width="1">
+    <line x1="560" y1="190" x2="560" y2="218"/>
+    <line x1="110" y1="214" x2="560" y2="214"/>
+  </g>
+  <text x="400" y="232" text-anchor="middle" fill="#5E6878" font-size="13">8.25 in overall</text>
+</svg>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal – Eleanor Ng</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --text: #1A2230;
+    --muted: #5E6878;
+    --line: #E4E7EC;
+    --accent: #1E5BD8;
+    --chip: #F1F4F8;
+    --display: "Times New Roman", Times, serif;
+    --body: "Times New Roman", Times, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #10161F;
+      --text: #E8ECF2;
+      --muted: #9AA5B4;
+      --line: #263142;
+      --accent: #6EA0FF;
+      --chip: #1A2330;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 1rem/1.65 var(--body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+  nav .mark { font: 700 1rem var(--display); color: var(--text); text-decoration: none; white-space: nowrap; margin-right: 16px; }
+  nav ul { display: flex; gap: 28px; list-style: none; padding: 0; font-size: .95rem; }
+  nav ul a { color: var(--muted); text-decoration: none; }
+  nav ul a:hover, nav ul a[aria-current="page"] { color: var(--text); }
+
+  .hero { padding: 48px 0 56px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center; }
+  .hero img { width: 180px; aspect-ratio: 1; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg); box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.12); }
+  h1 { font: 900 clamp(2.4rem, 7vw, 4rem)/1 var(--display); margin-bottom: 16px; }
+  .lede { max-width: 34em; font-size: 1.15rem; color: var(--muted); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font: 700 1.6rem var(--display); margin-bottom: 32px; }
+
+  .acts { list-style: none; padding: 0; }
+  .acts > li { display: grid; grid-template-columns: 160px 1fr; gap: 24px; padding-bottom: 36px; }
+  .acts > li:last-child { padding-bottom: 0; }
+  .acts time { color: var(--muted); font-size: .95rem; }
+  .acts h3 { font: 600 1.1rem var(--body); margin-bottom: 2px; }
+  .acts .org { color: var(--muted); font-size: .95rem; margin-bottom: 10px; }
+  .tag { display: inline-block; font-size: .78rem; letter-spacing: .03em; color: var(--muted); background: var(--chip); border-radius: 999px; padding: 1px 10px; margin-left: 8px; vertical-align: 2px; font-weight: 400; }
+  .points { color: var(--muted); padding-left: 1.1em; max-width: 42em; }
+  .points li { margin-bottom: 6px; }
+  .points strong { color: var(--text); font-weight: 600; }
+
+  .hobbies-title { font: 700 1.25rem var(--display); margin: 48px 0 16px; }
+  .hobbies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .hobby { border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+  .hobby h4 { font: 600 1rem var(--body); margin-bottom: 10px; }
+  .hobby ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .hobby li { background: var(--chip); border-radius: 999px; padding: 3px 12px; font-size: .92rem; }
+  @media (max-width: 720px) { .hobbies { grid-template-columns: 1fr; } }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+
+  @media (max-width: 720px) {
+    nav ul { gap: 16px; }
+    .hero { grid-template-columns: 1fr; gap: 24px; padding: 24px 0 40px; }
+    .hero img { width: 120px; }
+    .acts > li { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="mark" href="Portfolio.html">Eleanor Ng</a>
+      <ul>
+        <li><a href="Portfolio.html#projects">Projects</a></li>
+        <li><a href="Portfolio.html#experience">Experience</a></li>
+        <li><a href="Portfolio.html#skills">Skills</a></li>
+        <li><a href="Portfolio.html#contact">Contact</a></li>
+        <li><a href="personal.html" aria-current="page">Personal</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <img src="images/profile.jpg" alt="Portrait of Eleanor Ng">
+      <div>
+        <h1>Outside of engineering</h1>
+        <p class="lede">Beyond my engineering work, I edit a study abroad magazine, captain my club soccer team, lead a team of graders, and work with athletes and my campus community. Here are my activities and hobbies.</p>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="activities">
+        <h2 id="activities">Activities and hobbies</h2>
+        <ol class="acts">
+          <li>
+            <time>Aug 2026 – present</time>
+            <div>
+              <h3>Study Abroad Ambassador <span class="tag">Creative</span></h3>
+              <p class="org">Harvey Mudd College</p>
+              <ul class="points">
+                <li>Issue planning, feature writing, line-editing and proofreading for the study abroad magazine</li>
+                <li>Manage a team of 10+ writers and design issues in Canva</li>
+                <li>Assist the study abroad dean</li>
+                <li>Studying abroad in <strong>Madrid, Spring 2027</strong></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>May 2026 – present</time>
+            <div>
+              <h3>Club Soccer Captain</h3>
+              <p class="org">Claremont Colleges Club Sports</p>
+              <ul class="points">
+                <li>Captain for my college’s women’s club soccer team; lead and plan practices, organize a team of 25, and manage the budget</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>Jan 2026 – present</time>
+            <div>
+              <h3>Head Grader</h3>
+              <p class="org">Harvey Mudd College</p>
+              <ul class="points">
+                <li>Head grader for Introduction to Engineering Systems; organize and manage a team of 12 graders</li>
+                <li>Graded and provided feedback for 200+ students on Linear Algebra assignments during Spring 2026</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>Jan 2025 – present</time>
+            <div>
+              <h3>Linde Activities Center Supervisor and Employee</h3>
+              <p class="org">Harvey Mudd College</p>
+              <ul class="points">
+                <li>Organize and run community engagement events, supervise employees, create schedules and manage the budget</li>
+                <li>Serve as Athletic Director on Harvey Mudd College’s executive board</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <time>Jan 2025 – present</time>
+            <div>
+              <h3>Student Athletic Trainer</h3>
+              <p class="org">CMS Athletics</p>
+              <ul class="points">
+                <li>Provide treatment and administer physical therapy techniques to varsity athletes, including taping, STIM therapy and cupping</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="hobbies-title">Hobbies</h3>
+        <div class="hobbies">
+          <div class="hobby">
+            <h4>Art</h4>
+            <ul><li>Drawing</li><li>Painting</li></ul>
+          </div>
+          <div class="hobby">
+            <h4>Music</h4>
+            <ul><li>Singing</li><li>Guitar</li><li>Piano</li></ul>
+          </div>
+          <div class="hobby">
+            <h4>Sports</h4>
+            <ul><li>Soccer</li><li>Running</li><li>Intramural sports</li></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Eleanor Ng</footer>
+  </div>
+</body>
+</html>

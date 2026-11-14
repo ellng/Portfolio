@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ocean Sensing AUV – Eleanor Ng</title>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --text: #1A2230;
+    --muted: #5E6878;
+    --line: #E4E7EC;
+    --accent: #1E5BD8;
+    --display: "Times New Roman", Times, serif;
+    --body: "Times New Roman", Times, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #10161F;
+      --text: #E8ECF2;
+      --muted: #9AA5B4;
+      --line: #263142;
+      --accent: #6EA0FF;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 1rem/1.65 var(--body); }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; }
+  nav .mark { font: 700 1rem var(--display); color: var(--text); text-decoration: none; white-space: nowrap; }
+  nav .back { color: var(--muted); text-decoration: none; font-size: .95rem; }
+  nav .back:hover { color: var(--text); }
+
+  .hero { padding: 48px 0 64px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: center; }
+  .hero-photo img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 10px; }
+  .hero-photo figcaption { font-size: .9rem; color: var(--muted); margin-top: 10px; }
+  .eyebrow { color: var(--muted); font-size: .9rem; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+  h1 { font: 900 clamp(2.4rem, 7vw, 4.5rem)/1 var(--display); font-stretch: 80%; max-width: 14em; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; margin-top: 32px; font-size: .95rem; }
+  .facts dt { color: var(--muted); font-size: .85rem; }
+  .facts dd { font-weight: 500; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  h2 { font: 700 1.6rem var(--display); margin-bottom: 24px; }
+  h3 { font: 600 1.05rem var(--body); margin-bottom: 6px; }
+  .prose { max-width: 40em; color: var(--muted); }
+  .prose + .prose { margin-top: 16px; }
+  .prose strong { color: var(--text); font-weight: 600; }
+
+  .outcomes-title { margin-top: 32px; margin-bottom: 12px; }
+  .outcomes { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .chem { margin: 24px 0 8px; padding: 14px 18px; border-left: 3px solid var(--accent); font-size: 1.05rem; overflow-x: auto; white-space: nowrap; }
+  .filter { margin-top: 40px; padding-top: 32px; border-top: 1px dashed var(--line); }
+  .filter .steps { margin: 8px 0 8px; }
+  .filter .table-scroll { margin-bottom: 16px; }
+  .why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 32px; }
+  .why p { color: var(--muted); font-size: .97rem; }
+  .outcomes li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .outcomes li { border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; color: var(--muted); }
+
+  /* Figures: report plots have white backgrounds, so frame them on white in both themes */
+  .figs { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 32px; }
+  .figs.one { grid-template-columns: 1fr; }
+  .figs.three { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  figure a { display: block; background: #FFFFFF; border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+  figure img { display: block; width: 100%; height: auto; }
+  figcaption { font-size: .9rem; color: var(--muted); margin-top: 10px; }
+  figcaption strong { color: var(--text); font-weight: 600; }
+
+  .circuit { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; margin-top: 40px; }
+  .circuit p { color: var(--muted); font-size: .95rem; }
+  .nums { display: grid; grid-template-columns: auto 1fr; gap: 2px 16px; font-size: .9rem; margin-top: 12px; }
+  .nums dt { color: var(--muted); }
+  .nums dd { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .sensors { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: .95rem; }
+  .sensors th, .sensors td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .sensors th { font-weight: 600; font-size: .85rem; color: var(--muted); }
+  .table-scroll { overflow-x: auto; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 32px; }
+  .stat { border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+  .stat b { display: block; font: 700 1.6rem var(--display); font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: .9rem; }
+
+  .steps-title { margin-top: 32px; margin-bottom: 12px; }
+  .steps { max-width: 40em; color: var(--muted); padding-left: 1.1em; }
+  .steps li { margin-bottom: 10px; }
+  .steps strong { color: var(--text); font-weight: 600; }
+  .next { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font-size: .9rem; color: var(--muted); }
+
+  @media (max-width: 720px) {
+    .hero { padding: 24px 0 48px; grid-template-columns: 1fr; gap: 32px; }
+    .hero-photo img { aspect-ratio: 4 / 5; }
+    .facts { grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+    .outcomes, .figs, .figs.three, .circuit, .stats, .why { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="mark" href="Portfolio.html">Eleanor Ng</a>
+      <a class="back" href="Portfolio.html#projects">← All projects</a>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <p class="eyebrow">E80 Experimental Engineering · Harvey Mudd College</p>
+        <h1>Autonomous underwater vehicle for ocean sensing</h1>
+        <dl class="facts">
+          <div><dt>When</dt><dd>Spring 2026</dd></div>
+          <div><dt>Team</dt><dd>4 engineers</dd></div>
+          <div><dt>My role</dt><dd>Mechanical lead, team organization</dd></div>
+          <div><dt>Tools</dt><dd>Teensy 4.0, C++, MATLAB</dd></div>
+        </dl>
+      </div>
+      <figure class="hero-photo">
+        <img src="images/e80/auv-photo.jpg" alt="Our AUV on the dock at Dana Point before deployment: white PVC frame with purple foam floats, three motors and a black mesh-wrapped electronics box">
+        <figcaption>Our AUV on the dock at Dana Point, ready to dive.</figcaption>
+      </figure>
+    </header>
+
+    <main>
+      <section aria-labelledby="overview">
+        <h2 id="overview">Overview</h2>
+        <p class="prose">Worked in a team of 4 to design and deploy an autonomous underwater vehicle with a pressure sensor, thermistor, and pH sensor to develop a way to characterize different layers of the ocean to understand ocean acidification and how climate change is harming the natural process of marine organisms. We deployed our AUV at Dana Point, CA, collected data, and presented our findings to professors and other engineering students at Harvey Mudd College.</p>
+        <p class="prose">I was the mechanical lead: I designed the frame and waterproof electronics enclosure, ran the buoyancy and ballast calculations, and led integration of the motors, sensors and electronics into the vehicle. I also managed team organization and worked with my teammates on the circuits, C++ code, and data analysis.</p>
+        <h3 class="outcomes-title">Key outcomes:</h3>
+        <ul class="outcomes">
+          <li>Led mechanical design and integration, and calculated buoyancy and ballast for neutral trim: 0.63 kg of ballast for freshwater testing, plus 91 g for denser seawater at Dana Point</li>
+          <li>Built custom operational-amplifier circuits to scale analog sensor outputs to the input range of a Teensy 4.0. This allowed us to achieve higher resolutions to analyze the data collected.</li>
+          <li>Debugged circuits and hardware during testing and deployment using oscilloscopes and multimeters</li>
+          <li>Programmed feedback control loops in C++ for AUV depth and dive control</li>
+          <li>Used MATLAB to process collected data and create 2D plots</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="science">
+        <h2 id="science">Why pH and temperature?</h2>
+        <p class="prose">The ocean absorbs about a quarter of the CO₂ that humans release into the air. When CO₂ dissolves in seawater, a small amount reacts with water to form carbonic acid, which breaks apart and releases hydrogen ions. More hydrogen ions means lower pH and more acidic water. This is <strong>ocean acidification</strong>, and it speeds up as greenhouse gas emissions rise.</p>
+        <p class="chem" aria-label="Carbon dioxide from the air dissolves into seawater, reacts with water to form carbonic acid, which releases hydrogen ions, bicarbonate and carbonate">CO₂(atm) → CO₂(aq) + H₂O ⇄ H₂CO₃ ⇄ H⁺ + HCO₃⁻ ⇄ 2H⁺ + CO₃²⁻</p>
+        <div class="why">
+          <div>
+            <h3>pH shows the acid</h3>
+            <p>pH measures hydrogen ion concentration directly, so it is the most direct sign of acidification. As those extra hydrogen ions bind to carbonate, less of it is left for calcifying organisms like oysters, corals and plankton to build their calcium carbonate shells and skeletons. Acidic water can also keep larvae from surviving their early life stages.</p>
+          </div>
+          <div>
+            <h3>Temperature explains why</h3>
+            <p>How much CO₂ dissolves depends on temperature: by Henry's law, colder water holds more dissolved gas. Temperature also sets water density, which separates the ocean into layers that mix very little. Warming from climate change makes this layering stronger and adds heat stress for organisms that are already struggling with acidity.</p>
+          </div>
+          <div>
+            <h3>Depth puts it together</h3>
+            <p>Marine organisms live at specific depths, so a single surface reading can miss conditions that matter to them. Measuring pH and temperature together at each depth maps the ocean's layers and shows where acidic, CO₂-rich water sits. That shows which habitats are most at risk, and how a warming climate is changing them.</p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="vehicle">
+        <h2 id="vehicle">The vehicle</h2>
+        <p class="prose">A PVC frame carries three motors and foam floats for neutral buoyancy, with a waterproof box underneath for the Teensy, sensor protoboard, battery and ballast. The frame is a compact 18 × 21 × 19.5 cm to keep drag and vertical-motor current low. The robot weighed 3.01 kg; we calculated 0.63 kg of ballast for freshwater testing and added 91 g more at Dana Point for denser seawater (1025 kg/m³).</p>
+        <div class="figs">
+          <figure>
+            <a href="images/e80/auv-isometric.jpg"><img src="images/e80/auv-isometric.jpg" alt="Isometric sketch of the AUV with labeled foam noodles, motors, PVC frame, waterproof box and sensor penetrators" loading="lazy"></a>
+            <figcaption><strong>Isometric view.</strong> Sensor leads pass through sealed penetrators into the electronics box.</figcaption>
+          </figure>
+          <figure>
+            <a href="images/e80/auv-side.jpg"><img src="images/e80/auv-side.jpg" alt="Side view sketch of the AUV mechanical design" loading="lazy"></a>
+            <figcaption><strong>Side view.</strong> Only the vertical motor drives the dive; the other two balance the buoyancy.</figcaption>
+          </figure>
+        </div>
+        <div class="table-scroll">
+          <table class="sensors">
+            <thead><tr><th>Measures</th><th>Sensor</th><th>Why we chose it</th></tr></thead>
+            <tbody>
+              <tr><td>Depth</td><td>NXP MPX5700 pressure sensor</td><td>Wide pressure range, linear analog output, depth from P = ρgh</td></tr>
+              <tr><td>Temperature</td><td>Murata 47 kΩ NTC thermistor</td><td>High accuracy and sensitivity, short response time</td></tr>
+              <tr><td>pH</td><td>HNNUY liquid pH 0–14 module</td><td>Linear analog output within budget, Teensy compatible</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="circuits">
+        <h2 id="circuits">Circuit design</h2>
+        <p class="prose">Each sensor's output covers only a small part of the Teensy's 0–3.3 V ADC range at ocean conditions. We designed a two-stage op-amp circuit for each one: a unity-gain buffer to prevent loading the sensor, then a gain-and-offset stage that stretches the expected signal across most of the ADC range for better resolution.</p>
+
+        <div class="filter">
+          <h3>Decoupling capacitors and filtering</h3>
+          <p class="prose">Each op-amp has a 100 nF and a 10 µF capacitor from its 5 V supply to ground. These are <strong>decoupling capacitors</strong>: they hold the supply voltage steady when the motors and the Teensy draw sudden bursts of current. The 100 nF capacitor handles fast spikes and the 10 µF capacitor handles slower dips. Without them, supply noise would pass straight into the amplified sensor signal.</p>
+          <p class="prose">Decoupling cleans up the <em>power</em>, not the <em>signal</em>. Noise picked up by the sensors and wiring still reaches the Teensy, and at a 10 Hz sample rate, any noise above 5 Hz can alias, folding back into the data as a false low-frequency signal (Nyquist). The data shows this as small jitter on top of the depth and temperature readings.</p>
+          <p class="prose"><strong>Future step:</strong> add a passive RC low-pass filter between each op-amp output and its Teensy pin, a series resistor followed by a capacitor to ground, with cutoff f<sub>c</sub> = 1 / (2πRC). The sensor signals change over seconds as the AUV moves between waypoints, so a cutoff of a few hertz would keep the real signal and block the noise while staying under the 5 Hz Nyquist limit.</p>
+          <div class="table-scroll">
+            <table class="sensors">
+              <thead><tr><th>Proposed filter</th><th>R</th><th>C</th><th>f<sub>c</sub></th><th>2f<sub>c</sub> &lt; 10 Hz?</th></tr></thead>
+              <tbody>
+                <tr><td>Pressure</td><td>7.1 kΩ</td><td>10 µF</td><td>2.2 Hz</td><td>4.4 Hz ✓</td></tr>
+                <tr><td>Temperature</td><td>4.7 kΩ</td><td>10 µF</td><td>3.4 Hz</td><td>6.8 Hz ✓</td></tr>
+                <tr><td>pH</td><td>10 kΩ</td><td>10 µF</td><td>1.6 Hz</td><td>3.2 Hz ✓</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="circuit">
+          <figure>
+            <a href="images/e80/pressure-circuit.jpg"><img src="images/e80/pressure-circuit.jpg" alt="Pressure sensor schematic: voltage divider and buffer generating an offset, then a non-inverting amplifier feeding Teensy pin A02" loading="lazy"></a>
+          </figure>
+          <div>
+            <h3>Pressure (depth)</h3>
+            <p>Non-inverting amplifier with an offset from a buffered voltage divider. Covers 101–147 kPa, from the surface to the 4.5 m maximum depth.</p>
+            <dl class="nums">
+              <dt>Sensor out</dt><dd>0.84 – 1.15 V</dd>
+              <dt>To Teensy</dt><dd>0.44 – 2.85 V</dd>
+              <dt>Gain</dt><dd>8.1×</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="circuit">
+          <figure>
+            <a href="images/e80/temperature-circuit.jpg"><img src="images/e80/temperature-circuit.jpg" alt="Thermistor schematic: voltage divider, unity-gain buffer and inverting amplifier with 1.875 V reference" loading="lazy"></a>
+          </figure>
+          <div>
+            <h3>Temperature</h3>
+            <p>A thermistor voltage divider designed for 10–20 °C (59–97 kΩ), buffered, then sent through an inverting amplifier with a 1.875 V reference.</p>
+            <dl class="nums">
+              <dt>Divider out</dt><dd>1.68 – 2.23 V</dd>
+              <dt>To Teensy</dt><dd>0.30 – 2.74 V</dd>
+              <dt>Gain</dt><dd>−9.6×</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="circuit">
+          <figure>
+            <a href="images/e80/ph-circuit.png"><img src="images/e80/ph-circuit.png" alt="pH sensor schematic: pH electrode between two unity-gain buffers followed by an inverting amplifier" loading="lazy"></a>
+          </figure>
+          <div>
+            <h3>pH</h3>
+            <p>The electrode sits between two buffers with a 1 V offset, then goes through an inverting amplifier. Designed for seawater pH 7.8–8.4.</p>
+            <dl class="nums">
+              <dt>Probe out</dt><dd>0.7 – 1.3 V</dd>
+              <dt>Gain</dt><dd>−4.5×</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="calibration">
+        <h2 id="calibration">Calibration and verification</h2>
+        <p class="prose">We built a calibration curve for each sensor to convert logged voltages to physical units, then checked each one live on the serial monitor. Depth readings matched known depths in a graduated cylinder to within 2 cm, and temperature readings matched three prepared water baths to within 1 °C.</p>
+        <div class="figs three">
+          <figure>
+            <a href="images/e80/pressure-calibration.png"><img src="images/e80/pressure-calibration.png" alt="Pressure sensor calibration curve of depth versus voltage" loading="lazy"></a>
+            <figcaption><strong>Depth</strong> = 2.42 V − 0.0124, R² = 0.996</figcaption>
+          </figure>
+          <figure>
+            <a href="images/e80/temperature-calibration.png"><img src="images/e80/temperature-calibration.png" alt="Temperature sensor calibration curve of temperature versus voltage" loading="lazy"></a>
+            <figcaption><strong>Temperature</strong> = −3.9 V + 21.4, R² = 1.0</figcaption>
+          </figure>
+          <figure>
+            <a href="images/e80/ph-calibration.png"><img src="images/e80/ph-calibration.png" alt="pH sensor calibration curve using pH 4, 7 and 10 buffers" loading="lazy"></a>
+            <figcaption><strong>pH</strong> = 3.46 V + 1.08, R² = 0.998</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section aria-labelledby="deployment">
+        <h2 id="deployment">Deployment at Dana Point</h2>
+        <p class="prose">The dive code sent the AUV to waypoints at 0.5, 1.5, 2.5, 3.5 and 4.5 m, holding for 15 seconds at each under proportional depth control. We first verified it with two-waypoint tank tests at Harvey Mudd. On deployment day the thermistor began railing. Debugging on the dock showed its resistance had climbed to the megaohm range, so we replaced it, which left time for one full dive from the Ocean Institute dock. The water was shallow there, so the AUV reached three waypoints before touching the sea floor, and we pulled it up by its tether.</p>
+        <div class="figs">
+          <figure>
+            <a href="images/e80/depth-vs-time.png"><img src="images/e80/depth-vs-time.png" alt="Depth versus time plot showing three clean steps at about 0.7, 1.5 and 2.4 meters" loading="lazy"></a>
+            <figcaption><strong>Dive trajectory.</strong> P-control holds each waypoint steadily before stepping down.</figcaption>
+          </figure>
+          <figure>
+            <a href="images/e80/depth-temperature-vs-time.png"><img src="images/e80/depth-temperature-vs-time.png" alt="Depth and temperature versus time; temperature drops with each descent" loading="lazy"></a>
+            <figcaption><strong>Depth and temperature vs. time.</strong> Temperature shows a first-order response to each descent.</figcaption>
+          </figure>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>19.3 → 18.35 °C</b><span>Temperature from surface to 2.5 m</span></div>
+          <div class="stat"><b>&lt; 1 °C</b><span>Agreement with ground-truth measurement</span></div>
+          <div class="stat"><b>3 of 5</b><span>Waypoints reached in shallow water</span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="results">
+        <h2 id="results">Results</h2>
+        <p class="prose"><strong>Temperature worked.</strong> Averaging the data in 0.1 m depth bins gives a clean profile of temperature falling with depth. The large error bars near the surface come from air and water mixing as the AUV entered the water.</p>
+        <p class="prose"><strong>pH did not.</strong> Readings rose from 9.7 to 12.5 with depth, while ground-truth samples were around 6–7. The sensor clearly responded to depth changes, so the circuit was working, but the electrode had likely dried out between calibration and deployment. Our pH 4/7/10 calibration buffers also spanned far more than the range we expected to measure, which likely added interpolation error.</p>
+        <div class="figs">
+          <figure>
+            <a href="images/e80/temperature-depth-profile.png"><img src="images/e80/temperature-depth-profile.png" alt="Temperature versus depth profile with depth increasing downward, temperature falling from about 19.2 to 18.3 degrees Celsius" loading="lazy"></a>
+            <figcaption><strong>Temperature–depth profile</strong> of the deployment site.</figcaption>
+          </figure>
+          <figure>
+            <a href="images/e80/ph-vs-time.png"><img src="images/e80/ph-vs-time.png" alt="pH and temperature versus time, with pH rising unevenly as depth increases" loading="lazy"></a>
+            <figcaption><strong>pH vs. time.</strong> Large, uneven jumps that don't match seawater chemistry.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section aria-labelledby="conclusion">
+        <h2 id="conclusion">Conclusion</h2>
+        <p class="prose">This project shows a working pipeline for collecting ocean data autonomously, from sensing to analysis. Custom circuits condition each sensor's signal, the Teensy logs it during a closed-loop dive, and MATLAB turns the logs into depth profiles. The temperature results show the whole chain working in the ocean. The pH results show where the pipeline still needs work before it can support conclusions about ocean acidification.</p>
+        <h3 class="steps-title">Future steps</h3>
+        <ul class="steps">
+          <li><strong>Calibrate in realistic conditions.</strong> Use more points and more trials, in seawater, over the range we actually expect to measure. For pH, that means buffers near 7.8–8.4 instead of 4, 7 and 10.</li>
+          <li><strong>Recalibrate on site.</strong> Take several depth readings at the deployment location instead of applying a single offset.</li>
+          <li><strong>Filter the signals.</strong> Add an RC low-pass filter on each sensor output, with a cutoff of a few hertz, to cut noise and prevent aliasing at the 10 Hz sample rate.</li>
+          <li><strong>Protect the sensors.</strong> Store the pH electrode properly so it doesn't dry out, and bring a spare thermistor.</li>
+          <li><strong>Collect more data.</strong> Run multiple dives at different locations and times of day to build a full Dana Point water profile that can support conclusions about ocean acidification.</li>
+        </ul>
+      </section>
+
+      <section class="next">
+        <a href="Portfolio.html#projects">← Back to all projects</a>
+      </section>
+    </main>
+
+    <footer>© 2026 Eleanor Ng</footer>
+  </div>
+</body>
+</html>
