@@ -64,11 +64,12 @@
 
   .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
   .spec { border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; }
+  .spec i { display: block; font-style: normal; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
   .spec b { display: block; font: 700 1.35rem var(--display); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
   .spec span { color: var(--muted); font-size: .92rem; }
 
 
-  .lessons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 28px; }
+  .lessons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 28px; }
   .lessons p { color: var(--muted); font-size: .97rem; }
 
   .next { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -84,8 +85,8 @@
 <body>
   <div class="wrap">
     <nav aria-label="Main">
-      <a class="mark" href="Portfolio.html">Eleanor Ng</a>
-      <a class="back" href="Portfolio.html#projects">← All projects</a>
+      <a class="mark" href="index.html">Eleanor Ng</a>
+      <a class="back" href="index.html#projects">← All projects</a>
     </nav>
 
     <header class="hero">
@@ -119,14 +120,13 @@
 
       <section aria-labelledby="specs">
         <h2 id="specs">Key specifications</h2>
-        <p class="prose">The drawings use geometric dimensioning and tolerancing, so features are controlled by position and perpendicularity relative to datums, not just by size. These were the tightest features to hit:</p>
         <div class="specs">
-          <div class="spec"><b>0.0005–0.002 in</b><span>Interference between the hard face stem (Ø0.5020 +0/−0.0005) and its hole in the head (Ø0.500 +0.001/−0). I measured the hole with pin gauges and turned the stem to match.</span></div>
-          <div class="spec"><b>0.860 in</b><span>Distance between the two milled flats on the head, finished with a 0.01 in fly-cutter pass on each side.</span></div>
-          <div class="spec"><b>Ø0.005 in</b><span>Position tolerance at maximum material condition for the head's holes and slot, relative to the part's datums.</span></div>
-          <div class="spec"><b>RC 43–48</b><span>Rockwell C hardness for the hard face after heat treating and an oil quench, so it can strike steel without denting.</span></div>
-          <div class="spec"><b>SR 1.25 in</b><span>Spherical radius ground onto the hard face, checked with a radius gauge.</span></div>
-          <div class="spec"><b>8.25 in</b><span>Overall length, with the hard face, head and wedge finished flush.</span></div>
+          <div class="spec"><i>Hard face fit</i><b>0.0005–0.002 in</b><span>How much wider the hard face's stem is than its hole in the head, so it stays in by friction when pressed in.</span></div>
+          <div class="spec"><i>Head width</i><b>0.860 in</b><span>Distance between the two flat sides of the steel head.</span></div>
+          <div class="spec"><i>Hole placement</i><b>0.005 in</b><span>Allowed error in where the holes and slot are placed on the head.</span></div>
+          <div class="spec"><i>Hard face hardness</i><b>RC 43–48</b><span>Hardness after heat treating, so the face can strike steel without denting.</span></div>
+          <div class="spec"><i>Hard face curve</i><b>1.25 in radius</b><span>The slightly rounded striking surface on the hard face.</span></div>
+          <div class="spec"><i>Overall length</i><b>8.25 in</b><span>Hammer length from end to end.</span></div>
         </div>
       </section>
 
@@ -138,10 +138,6 @@
             <p>Interpreting GD&amp;T callouts like position at maximum material condition, datums and feature control frames, and turning them into measurements I could check at the machine.</p>
           </div>
           <div>
-            <h3>Planning for tolerance</h3>
-            <p>Roughing close, then taking a light finishing pass, and measuring the mating part before cutting, as I did for the press fit, instead of trusting the nominal number.</p>
-          </div>
-          <div>
             <h3>Shop practice</h3>
             <p>Choosing speeds and feeds, peck drilling, fixturing parts securely, heat treating safely, and knowing when to stop sanding.</p>
           </div>
@@ -149,7 +145,7 @@
       </section>
 
       <section class="next">
-        <a href="Portfolio.html#projects">← Back to all projects</a>
+        <a href="index.html#projects">← Back to all projects</a>
       </section>
     </main>
 

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eleanor Ng – Engineer</title>
+<script>document.documentElement.classList.add("js");</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
@@ -68,6 +69,8 @@
     font-family: var(--name); font-weight: 900; font-stretch: 75%;
     font-size: clamp(4rem, 14vw, 9.5rem); line-height: .88; display: block;
   }
+  /* Hide the plain text until the beam drawing replaces it (space is kept so the layout doesn't jump) */
+  .js .beam-name:not(.rendered) .name-text { visibility: hidden; }
   .beam-name.rendered .name-text {
     position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
   }
@@ -140,10 +143,10 @@
   .jobs .org { margin-bottom: 12px; font-size: .95rem; }
   .job-points { color: var(--muted); padding-left: 1.1em; margin: 14px 0 0; max-width: 42em; }
   .job-points li { display: list-item; padding: 0; margin-bottom: 6px; }
-  .job-figs { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; margin-top: 24px; align-items: start; }
+  .job-figs { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; margin-top: 20px; align-items: start; max-width: 520px; }
   .job-figs img { display: block; width: 100%; height: auto; border-radius: 6px; background: #FFFFFF; }
-  .job-logo { display: inline-block; background: #FFFFFF; border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; margin: 10px 0 4px; }
-  .job-logo img { display: block; width: min(320px, 70vw); height: auto; }
+  .job-logo { display: inline-block; background: #FFFFFF !important; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin: 10px 0 4px; }
+  .job-logo img { display: block; width: auto; height: 28px; max-width: 60vw; background: #FFFFFF; }
   a.job-logo { transition: border-color .15s; }
   a.job-logo:hover { border-color: var(--accent); }
   .jobs h3 a { color: inherit; text-decoration-color: var(--line); }
@@ -180,7 +183,6 @@
       <ul>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="personal.html">Personal</a></li>
       </ul>
@@ -257,8 +259,8 @@
         </a>
 
         <a class="project project-link" href="hammer.html">
-          <figure class="sketch">
-            <img src="images/hammer/hammer.svg" alt="Illustration of the machined hammer: steel head with a hardened steel face and a nylon soft face on a shaped oak handle">
+          <figure class="tall">
+            <img src="images/hammer/hammer-stand.jpg" alt="The finished hammer resting on a laser-engraved wooden stand">
           </figure>
           <div>
             <h3>Machined Hammer</h3>
@@ -266,7 +268,7 @@
             <dl class="specs">
               <dt>Course</dt><dd>E4, Harvey Mudd College</dd>
               <dt>Machines</dt><dd>Lathe, mill, bandsaws, laser cutter, router table</dd>
-              <dt>Key spec</dt><dd>Hard face press fit, 0.0005–0.002 in interference</dd>
+              <dt>Key spec</dt><dd>Hard face pressed into the head: stem 0.0005–0.002 in wider than its hole</dd>
             </dl>
             <span class="more">See the full project <span aria-hidden="true">→</span></span>
           </div>
@@ -300,7 +302,7 @@
                 <li>Resolved design and construction issues relating to internal structures within the COLUMBIA class of submarines</li>
                 <li>Revised calculation package to demonstrate the structural integrity of design changes</li>
                 <li>Performed finite element analysis using proprietary software and gained experience with Teamcenter</li>
-                <li>Obtained Secret Clearance (DoD)</dd>
+                <li>Obtained Secret Clearance (DoD)</li>
               </ul>
             </div>
           </li>
